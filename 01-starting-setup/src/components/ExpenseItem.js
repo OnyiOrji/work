@@ -7,10 +7,10 @@ function ExpenseItem() {
 
     return (
         <div className="expense-item">
-            <div>March 28th 2021</div>
+            <div>{expenseDate.toISOString()}</div>
             <div className="expense-item__description">
                 <h2>{expenseTitle}</h2>
-                <div>$294.67</div>
+                <div>${expenseAmount}</div>
             </div>
         </div>
     )
