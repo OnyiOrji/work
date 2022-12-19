@@ -29,7 +29,7 @@ function App() {
     'div',
     {},
     React.createElement('h2', {}, "Let's get started!"),
-    React.createElement()
+    React.createElement(Expenses, { items: expenses })
   );
 
   // return (
