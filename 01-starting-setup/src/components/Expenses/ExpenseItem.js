@@ -2,8 +2,12 @@ import ExpenseDate from './ExpenseDate';
 import './ExpenseItem.css';
 
 function ExpenseItem(props) {
+
+    let title = props.title;
+
     const clickHandler = () => {
-        console.log('Clicked!!!!')
+        title = 'Updated!';
+        console.log(title)
     };
 
     return (
