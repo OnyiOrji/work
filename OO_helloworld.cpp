@@ -1,8 +1,6 @@
-//>>Onyinyechukwu Orji<<
- 
-//>>01/18/2023<<
- 
-//Assignment 1: Hello World!
+// <<Onyinyechukwu Orji>>
+// <<01/19/2023>>
+// Assignment 1: Hello World!
  
 #include <iostream>
 using namespace std;
