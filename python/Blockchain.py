@@ -118,15 +118,13 @@ blockchain = Blockchain()
 
 # Mining a new Block
 
-
 @app.route('/mine_block', methods=['GET'])
 def mine_block():
     previous_block = blockchain.get_previous_block()
     previous_proof = previous_block['proof']
     proof = blockchain.proof_of_work(previous_proof)
     previous_hash = blockchain.hash(previous_block)
-    blockchain.add_transaction(
-        sender=node_address, receiver='Hadelin', amount=100)
+    blockchain.add_transaction(sender=node_address, receiver='Hadelin', amount=100)
     block = blockchain.create_block(proof, previous_hash)
     response = {'message': 'Congratulations, You Mined A Block!',
                 'index': block['index'],
@@ -138,7 +136,6 @@ def mine_block():
 
 # Getting the full Blockchain
 
-
 @app.route('/get_chain', methods=['GET'])
 def get_chain():
     response = {'chain': blockchain.chain,
@@ -146,7 +143,6 @@ def get_chain():
     return jsonify(response), 200
 
 # Check if Blockchain is valid
-
 
 @app.route('/is_valid', methods=['GET'])
 def is_valid():
@@ -157,6 +153,16 @@ def is_valid():
         response = {'message': 'Error! Chain NOT valid'}
     return jsonify(response)
 
+# Adding a new transaction to the Blockchain
+@app.route('/add_transaction', methods=['POST'])
+def add_transaction():
+    json = request.get_json()
+    transaction_keys = ['sender', 'receiver', 'amount']
+    if not all (key in json for key in transaction_keys):
+        return 'Error keys are missing!', 400
+    index = blockchain.add_transaction(json['sender'], json['receiver'], json['amount'])
+    response = {'message': f'This transaction will be added to Block {index}'}
+    return jsonif(response), 201
 
 # Running the app
 # if __name__ == "__main__":
