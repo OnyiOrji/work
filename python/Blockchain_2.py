@@ -162,7 +162,15 @@ def add_transaction():
         return 'Error keys are missing!', 400
     index = blockchain.add_transaction(json['sender'], json['receiver'], json['amount'])
     response = {'message': f'This transaction will be added to Block {index}'}
-    return jsonif(response), 201
+    return jsonify(response), 201
+
+# Part 3 - Decentralized our Blockchain
+
+# Connecting new nodes
+@app.route('/connect_node', methods=['POST'])
+def connect_node():
+    json = request.get_json()
+
 
 # Running the app
 # if __name__ == "__main__":
