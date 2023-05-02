@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Spyder Editor
-
-Author: Onyinyechukwu Orji
-Create a Blockchain
-"""
 import datetime
 import hashlib
 import json
@@ -185,13 +178,15 @@ def replace_chain():
     is_chain_replaced = blockchain.replace_chain()
     if is_chain_replaced:
         response = {'message': 'The node has a different chain so it will be replaced by the longest chain.',
-                    'New Chain': blockchain.chain}
+                    'new_chain': blockchain.chain}
     else:
         response = {'message': 'Success! This chain is the largest.',
-                    'Current Chain': blockchain.chain}
+                    'actual_chain': blockchain.chain}
     return jsonify(response), 200
 # Running the app
 # if __name__ == "__main__":
     # from waitress import serve
     # serve(app, host="0.0.0.0", port=8080)
-app.run(host='0.0.0.0', port=(8080))
+app.run(host='0.0.0.0', port=(5001))
+
+

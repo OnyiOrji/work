@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Spyder Editor
-
-Author: Onyinyechukwu Orji
-Create a Blockchain
-"""
 import datetime
 import hashlib
 import json
@@ -118,13 +111,14 @@ blockchain = Blockchain()
 
 # Mining a new Block
 
+
 @app.route('/mine_block', methods=['GET'])
 def mine_block():
     previous_block = blockchain.get_previous_block()
     previous_proof = previous_block['proof']
     proof = blockchain.proof_of_work(previous_proof)
     previous_hash = blockchain.hash(previous_block)
-    blockchain.add_transaction(sender=node_address, receiver='WCI', amount=100)
+    blockchain.add_transaction(sender=node_address, receiver='You', amount=100)
     block = blockchain.create_block(proof, previous_hash)
     response = {'message': 'Congratulations, You Mined A Block!',
                 'index': block['index'],
@@ -136,6 +130,7 @@ def mine_block():
 
 # Getting the full Blockchain
 
+
 @app.route('/get_chain', methods=['GET'])
 def get_chain():
     response = {'chain': blockchain.chain,
@@ -143,6 +138,7 @@ def get_chain():
     return jsonify(response), 200
 
 # Check if Blockchain is valid
+
 
 @app.route('/is_valid', methods=['GET'])
 def is_valid():
@@ -154,19 +150,24 @@ def is_valid():
     return jsonify(response), 200
 
 # Adding a new transaction to the Blockchain
+
+
 @app.route('/add_transaction', methods=['POST'])
 def add_transaction():
     json = request.get_json()
     transaction_keys = ['sender', 'receiver', 'amount']
-    if not all (key in json for key in transaction_keys):
+    if not all(key in json for key in transaction_keys):
         return 'Error keys are missing!', 400
-    index = blockchain.add_transaction(json['sender'], json['receiver'], json['amount'])
+    index = blockchain.add_transaction(
+        json['sender'], json['receiver'], json['amount'])
     response = {'message': f'This transaction will be added to Block {index}'}
     return jsonify(response), 201
 
 # Part 3 - Decentralized our Blockchain
 
 # Connecting new nodes
+
+
 @app.route('/connect_node', methods=['POST'])
 def connect_node():
     json = request.get_json()
@@ -180,18 +181,22 @@ def connect_node():
     return jsonify(response), 201
 
 # Replacing the chain by the longest chain if needed
+
+
 @app.route('/replace_chain', methods=['GET'])
 def replace_chain():
     is_chain_replaced = blockchain.replace_chain()
     if is_chain_replaced:
         response = {'message': 'The node has a different chain so it will be replaced by the longest chain.',
-                    'New Chain': blockchain.chain}
+                    'new_chain': blockchain.chain}
     else:
         response = {'message': 'Success! This chain is the largest.',
-                    'Current Chain': blockchain.chain}
+                    'actual_chain': blockchain.chain}
     return jsonify(response), 200
+
+
 # Running the app
 # if __name__ == "__main__":
     # from waitress import serve
     # serve(app, host="0.0.0.0", port=8080)
-app.run(host='0.0.0.0', port=(8080))
+app.run(host='0.0.0.0', port=(5003))
